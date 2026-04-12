@@ -1,11 +1,1104 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import { Tweet } from 'astro-embed';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const workflow = [
+	{
+		step: '01',
+		title: 'Build widgets faster',
+		description:
+			'Use Statify Easy Widget to turn Eloquent-driven numbers into Filament stats widgets with a fluent API.',
+	},
+	{
+		step: '02',
+		title: 'Expose them securely',
+		description:
+			'Use Statify to publish Filament stats widgets as secure HTTPS endpoints that work beyond the admin panel.',
+	},
+	{
+		step: '03',
+		title: 'View them anywhere',
+		description:
+			'Use Statify Companion to connect those endpoints and keep your dashboard widgets in a single Chrome tab.',
+	},
+];
+
+const products = [
+	{
+		id: 'statify',
+		name: 'Statify',
+		eyebrow: 'Flagship package',
+		description:
+			'Expose Filament stats widgets as an API so your metrics can move across browsers, devices, and upcoming integrations.',
+		details: [
+			'Supports Filament 4 and 5',
+			'Depends on filament/widgets',
+			'StatifyPlugin stays optional via full filament/filament',
+			'Latest pushed release: v0.2.0',
+		],
+		command: 'composer require filahq/statify',
+		link: 'https://github.com/filahq/filament-statify',
+		linkLabel: 'View on GitHub',
+	},
+	{
+		id: 'easy-widget',
+		name: 'Statify Easy Widget',
+		eyebrow: 'Builder package',
+		description:
+			'Build Filament stats widgets from Eloquent models with a fluent API, then pair them with Statify when you want to expose them outside the panel.',
+		details: [
+			'Supports Filament 4 and 5',
+			'Depends on filament/widgets',
+			'StatifyEasyWidgetPlugin stays optional via full filament/filament',
+			'Latest pushed release: v0.2.0',
+		],
+		command: 'composer require filahq/statify-easy-widget',
+		link: 'https://github.com/filahq/filament-statify-easy-widget',
+		linkLabel: 'View on GitHub',
+	},
+	{
+		id: 'extension',
+		name: 'Statify Companion',
+		eyebrow: 'Chrome extension',
+		description:
+			'Connect secure HTTPS Statify endpoints and keep the resulting dashboard widgets together in a single Chrome tab.',
+		details: [
+			'Chrome Web Store listing: Statify Companion',
+			'Built for secure HTTPS Statify endpoints',
+			'Groups dashboard widgets in one browser surface',
+			'Extends the Statify workflow beyond Filament admin',
+		],
+		command: 'chromewebstore.google.com/detail/statify-companion/aeimjgckeleohfojillidaknnlnppefb',
+		link: 'https://chromewebstore.google.com/detail/statify-companion/aeimjgckeleohfojillidaknnlnppefb',
+		linkLabel: 'Open Chrome Web Store',
+		actionLabel: 'Add to Chrome',
+	},
+];
+
+const upcomingIntegrations = ['Desktop', 'Tablet', 'Mobile', 'Kiosk', 'New browser surfaces'];
+
+const originTweets = [
+	{
+		label: 'Early signal',
+		url: 'https://x.com/imknight/status/1794725808055226860',
+	},
+	{
+		label: 'Working direction',
+		url: 'https://x.com/imknight/status/1769375967234097531',
+	},
+];
+
+const originArticle = {
+	label: 'Field note',
+	title: 'FilaHQ Mobile App',
+	summary:
+		'The original thread behind Statify: getting FilamentPHP site stats into a mobile-friendly surface for faster visibility outside the admin panel.',
+	url: 'https://imknight.com/filahq-mobile-app/',
+};
 ---
 
 <Layout>
-	<Welcome />
+	<main class="landing-page">
+		<section class="hero" id="hero">
+			<div class="hero__copy">
+				<p class="eyebrow">FilaHQ builds Filament plugins and integrations</p>
+				<h1>Take Filament stats beyond the panel.</h1>
+				<p class="hero__lede">
+					Expose stats widgets securely, connect them in Chrome today, and prepare your
+					metrics for desktop, tablet, mobile, and the next integration surface.
+				</p>
+				<div class="hero__actions">
+					<a class="button button--signal" href="#statify">Install Statify</a>
+					<a class="button button--muted" href="#easy-widget">Install Easy Widget</a>
+					<a
+						class="button button--ghost"
+						href="https://chromewebstore.google.com/detail/statify-companion/aeimjgckeleohfojillidaknnlnppefb"
+						target="_blank"
+						rel="noreferrer"
+					>
+						Add to Chrome
+					</a>
+				</div>
+				<ul class="hero__meta" aria-label="Product highlights">
+					<li>Filament 4 + 5 ready</li>
+					<li>Secure HTTPS endpoints</li>
+					<li>Cross-platform roadmap underway</li>
+				</ul>
+			</div>
+
+			<div class="hero__visual" aria-hidden="true">
+				<div class="signal-grid">
+					<div class="signal-grid__beam signal-grid__beam--one"></div>
+					<div class="signal-grid__beam signal-grid__beam--two"></div>
+					<div class="signal-node signal-node--core">
+						<span>Statify API</span>
+					</div>
+					<div class="signal-node signal-node--chrome">
+						<span>Chrome</span>
+					</div>
+					<div class="signal-node signal-node--desktop">
+						<span>Desktop</span>
+					</div>
+					<div class="signal-node signal-node--tablet">
+						<span>Tablet</span>
+					</div>
+					<div class="signal-node signal-node--mobile">
+						<span>Mobile</span>
+					</div>
+					<div class="signal-grid__card">
+						<p>Widgets leave the panel.</p>
+						<p>Signal stays secure.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="workflow section" id="workflow">
+			<div class="section-heading">
+				<p class="section-heading__eyebrow">One stack, three moves</p>
+				<h2>Build, expose, and surface Filament stats without changing the story.</h2>
+			</div>
+
+			<div class="workflow__line" aria-hidden="true"></div>
+			<div class="workflow__grid">
+				{workflow.map((item) => (
+					<article class="workflow__item">
+						<p class="workflow__step">{item.step}</p>
+						<h3>{item.title}</h3>
+						<p>{item.description}</p>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<section class="future section" id="future">
+			<div class="section-heading">
+				<p class="section-heading__eyebrow">More surfaces on the way</p>
+				<h2>Chrome is the first active integration, not the final destination.</h2>
+			</div>
+			<div class="future__content">
+				<p class="future__lede">
+					FilaHQ is building the cross-platform layer around Statify so Filament developers can
+					move the same dashboard signal into the right context for the device in front of them.
+				</p>
+				<div class="future__marquee">
+					{upcomingIntegrations.map((item) => <span>{item}</span>)}
+				</div>
+			</div>
+		</section>
+
+		<section class="products section" id="products">
+			<div class="section-heading">
+				<p class="section-heading__eyebrow">Current products</p>
+				<h2>The Statify ecosystem already ships as two open-source packages and one extension.</h2>
+			</div>
+
+			<div class="product-list">
+				{products.map((product) => (
+					<article class="product" id={product.id}>
+						<div class="product__intro">
+							<p class="product__eyebrow">{product.eyebrow}</p>
+							<h3>{product.name}</h3>
+							<p class="product__description">{product.description}</p>
+						</div>
+
+						<div class="product__details">
+							<ul class="product__points">
+								{product.details.map((detail) => <li>{detail}</li>)}
+							</ul>
+							<div class="product__install">
+								{
+									product.id === 'extension' ? (
+										<>
+											<div class="product__links">
+												<a
+													class="button button--signal button--small button--wide"
+													href={product.link}
+													target="_blank"
+													rel="noreferrer"
+												>
+													{product.actionLabel}
+												</a>
+											</div>
+										</>
+									) : (
+										<button
+											type="button"
+											class="install-command copy-button"
+											data-copy={product.command}
+											aria-label={`Copy command: ${product.command}`}
+										>
+											<span data-copy-label>{product.command}</span>
+											<span class="install-command__icon" aria-hidden="true">
+												<svg viewBox="0 0 24 24" role="img" focusable="false">
+													<path
+														d="M9 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9Z"
+														fill="none"
+														stroke="currentColor"
+														stroke-linecap="round"
+														stroke-linejoin="round"
+														stroke-width="1.75"
+													/>
+													<path
+														d="M15 7V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h1"
+														fill="none"
+														stroke="currentColor"
+														stroke-linecap="round"
+														stroke-linejoin="round"
+														stroke-width="1.75"
+													/>
+												</svg>
+											</span>
+										</button>
+									)
+								}
+							</div>
+						</div>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<section class="origin section" id="origin">
+			<div class="section-heading">
+				<p class="section-heading__eyebrow">How This Began</p>
+				<h2>Statify started as a practical way to move Filament stats into the places people actually check.</h2>
+			</div>
+			<p class="origin__intro">
+				Before the packages and extension, the idea showed up in public notes and experiments around
+				getting Filament numbers into more accessible surfaces.
+			</p>
+
+			<div class="origin__grid">
+				{originTweets.map((tweet) => (
+					<article class="origin__item origin__item--tweet">
+						<p class="origin__label">{tweet.label}</p>
+						<Tweet id={tweet.url} theme="dark" />
+					</article>
+				))}
+
+				<article class="origin__item origin__item--article">
+					<p class="origin__label">{originArticle.label}</p>
+					<h3>{originArticle.title}</h3>
+					<p>{originArticle.summary}</p>
+					<a href={originArticle.url} target="_blank" rel="noreferrer">
+						Read the article
+					</a>
+				</article>
+			</div>
+
+			<p class="origin__outro">That early idea became Statify, and this is only the first surface.</p>
+		</section>
+
+		<section class="closing section">
+			<div class="closing__panel">
+				<p class="section-heading__eyebrow">Start with today&apos;s stack</p>
+				<h2>Start with Statify and bring your Filament stats anywhere.</h2>
+				<div class="closing__actions">
+					<a class="button button--signal" href="#statify">
+						Install Statify
+					</a>
+					<a class="button button--muted" href="#easy-widget">
+						Install Easy Widget
+					</a>
+					<a
+						class="button button--ghost"
+						href="https://chromewebstore.google.com/detail/statify-companion/aeimjgckeleohfojillidaknnlnppefb"
+						target="_blank"
+						rel="noreferrer"
+					>
+						Add to Chrome
+					</a>
+				</div>
+			</div>
+		</section>
+
+		<footer class="footer">
+			<p class="footer__brand">FilaHQ</p>
+			<div class="footer__links">
+				<a href="https://github.com/filahq/filament-statify" target="_blank" rel="noreferrer">Statify GitHub</a>
+				<a href="https://github.com/filahq/filament-statify-easy-widget" target="_blank" rel="noreferrer">
+					Statify Easy Widget GitHub
+				</a>
+				<a
+					href="https://chromewebstore.google.com/detail/statify-companion/aeimjgckeleohfojillidaknnlnppefb"
+					target="_blank"
+					rel="noreferrer"
+				>
+					Chrome Web Store
+				</a>
+				<a href="https://x.com/imknight" target="_blank" rel="noreferrer">X</a>
+				<a href="https://imknight.com" target="_blank" rel="noreferrer">Blog</a>
+				<a href="https://imknight.dev" target="_blank" rel="noreferrer">Dev Log</a>
+			</div>
+			<p class="footer__meta">© 2026 ProductizeHQ LLP. Built with 🧩</p>
+		</footer>
+	</main>
 </Layout>
+
+<script>
+	const copyButtons = document.querySelectorAll('.copy-button');
+
+	for (const button of copyButtons) {
+		button.addEventListener('click', async () => {
+			const command = button.getAttribute('data-copy');
+			const label = button.querySelector('[data-copy-label]');
+
+			if (!command) {
+				return;
+			}
+
+			try {
+				await navigator.clipboard.writeText(command);
+				const originalText = label?.textContent ?? button.textContent;
+
+				if (label) {
+					label.textContent = 'Copied';
+				} else {
+					button.textContent = 'Copied';
+				}
+
+				window.setTimeout(() => {
+					if (label) {
+						label.textContent = originalText;
+					} else {
+						button.textContent = originalText;
+					}
+				}, 1500);
+			} catch {
+				if (label) {
+					label.textContent = command;
+				} else {
+					button.textContent = command;
+				}
+			}
+		});
+	}
+</script>
+
+<style>
+	.landing-page {
+		padding: 0 1.25rem 2rem;
+	}
+
+	.hero,
+	.section,
+	.footer {
+		width: min(1180px, 100%);
+		margin: 0 auto;
+	}
+
+	.eyebrow,
+	.section-heading__eyebrow,
+	.product__eyebrow,
+	.workflow__step,
+	.footer__brand {
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+	}
+
+	.section-heading__eyebrow,
+	.product__eyebrow,
+	.workflow__step {
+		color: var(--color-signal);
+	}
+
+	.footer__brand {
+		font-size: 0.95rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+	}
+
+	.text-link,
+	.text-link:visited,
+	.footer__links a {
+		color: var(--color-text-soft);
+		text-decoration: none;
+		transition: color 180ms ease;
+	}
+
+	.footer__links a:visited {
+		color: var(--color-text-soft);
+	}
+
+	.text-link:hover,
+	.footer__links a:hover {
+		color: var(--color-text);
+	}
+
+	.hero {
+		display: grid;
+		grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+		align-items: center;
+		gap: 2rem;
+		min-height: 100svh;
+		padding: 3rem 0;
+	}
+
+	.hero__copy {
+		max-width: 40rem;
+		animation: rise 680ms ease both;
+	}
+
+	.eyebrow {
+		margin: 0 0 1rem;
+		color: var(--color-signal);
+	}
+
+	h1,
+	h2,
+	h3,
+	p {
+		margin: 0;
+	}
+
+	h1 {
+		font-size: clamp(2.9rem, 6.4vw, 5.7rem);
+		line-height: 0.94;
+		letter-spacing: -0.05em;
+		max-width: 12ch;
+	}
+
+	.hero__lede,
+	.future__lede,
+	.product__description,
+	.workflow__item p,
+	.footer p {
+		color: var(--color-text-soft);
+	}
+
+	.hero__lede {
+		margin-top: 1.4rem;
+		font-size: 1.1rem;
+		line-height: 1.7;
+		max-width: 36rem;
+	}
+
+	.hero__actions,
+	.closing__actions,
+	.product__links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.9rem;
+	}
+
+	.hero__actions {
+		margin-top: 2rem;
+	}
+
+	.button {
+		appearance: none;
+		cursor: pointer;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 2.35rem;
+		padding: 0.5rem 1.15rem;
+		border: 1px solid var(--color-line);
+		border-radius: 999px;
+		color: var(--color-text);
+		font-size: 0.95rem;
+		line-height: 1.1;
+		font-weight: 700;
+		text-decoration: none;
+		transition:
+			transform 180ms ease,
+			background-color 180ms ease,
+			border-color 180ms ease;
+	}
+
+	.button:visited {
+		color: inherit;
+	}
+
+	.button:hover {
+		transform: translateY(-2px);
+	}
+
+	.button--signal {
+		background: var(--color-signal);
+		border-color: var(--color-signal);
+		color: #1e1e1e;
+	}
+
+	.button--signal:visited {
+		color: #1e1e1e;
+	}
+
+	.button--muted {
+		background: rgba(255, 255, 255, 0.09);
+		color: var(--color-text);
+	}
+
+	.button--muted:visited,
+	.button--ghost:visited {
+		color: var(--color-text);
+	}
+
+	.button--ghost {
+		background: transparent;
+		color: var(--color-text);
+	}
+
+	.button--small {
+		min-height: 2rem;
+		padding: 0.42rem 1rem;
+		font-size: 0.88rem;
+	}
+
+	.button--wide {
+		min-width: 12.5rem;
+		padding-inline: 1.4rem;
+	}
+
+	.hero__meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.8rem 1.2rem;
+		margin: 1.35rem 0 0;
+		padding: 0;
+		list-style: none;
+		color: var(--color-text-soft);
+		font-size: 0.95rem;
+	}
+
+	.hero__meta li {
+		position: relative;
+		padding-left: 1rem;
+	}
+
+	.hero__meta li::before {
+		content: '';
+		position: absolute;
+		top: 0.45rem;
+		left: 0;
+		width: 0.45rem;
+		height: 0.45rem;
+		border-radius: 999px;
+		background: var(--color-signal);
+	}
+
+	.hero__visual {
+		display: flex;
+		justify-content: center;
+		animation: drift 10s ease-in-out infinite alternate;
+	}
+
+	.signal-grid {
+		position: relative;
+		width: min(100%, 34rem);
+		aspect-ratio: 1 / 1.02;
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 2rem;
+		background:
+			linear-gradient(135deg, rgba(255, 255, 255, 0.06), transparent 46%),
+			radial-gradient(circle at 20% 15%, rgba(255, 204, 0, 0.32), transparent 32%),
+			rgba(255, 255, 255, 0.04);
+		box-shadow: 0 2rem 4rem var(--color-shadow);
+		overflow: hidden;
+	}
+
+	.signal-grid::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background-image:
+			linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+		background-size: 3.8rem 3.8rem;
+		mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.85), transparent);
+	}
+
+	.signal-grid__beam {
+		position: absolute;
+		background: linear-gradient(90deg, transparent, rgba(255, 204, 0, 0.8), transparent);
+	}
+
+	.signal-grid__beam--one {
+		top: 42%;
+		left: 18%;
+		width: 64%;
+		height: 2px;
+	}
+
+	.signal-grid__beam--two {
+		top: 24%;
+		left: 45%;
+		width: 2px;
+		height: 54%;
+		background: linear-gradient(180deg, transparent, rgba(255, 204, 0, 0.85), transparent);
+	}
+
+	.signal-node,
+	.signal-grid__card {
+		position: absolute;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 1.2rem;
+		background: rgba(23, 23, 23, 0.75);
+		backdrop-filter: blur(10px);
+	}
+
+	.signal-node {
+		display: grid;
+		place-items: center;
+		min-width: 7rem;
+		min-height: 4.5rem;
+		padding: 0.85rem 1rem;
+		text-align: center;
+		font-weight: 700;
+	}
+
+	.signal-node span {
+		display: block;
+		max-width: 7ch;
+	}
+
+	.signal-node--core {
+		top: 33%;
+		left: 35%;
+		min-width: 8.5rem;
+		min-height: 5rem;
+		border-color: rgba(255, 204, 0, 0.5);
+		box-shadow: 0 0 0 1px rgba(255, 204, 0, 0.2), 0 1rem 2rem rgba(255, 204, 0, 0.15);
+	}
+
+	.signal-node--chrome {
+		top: 10%;
+		right: 8%;
+	}
+
+	.signal-node--desktop {
+		bottom: 12%;
+		right: 10%;
+	}
+
+	.signal-node--tablet {
+		top: 20%;
+		left: 10%;
+	}
+
+	.signal-node--mobile {
+		bottom: 16%;
+		left: 8%;
+	}
+
+	.signal-grid__card {
+		right: 7%;
+		bottom: 6%;
+		padding: 1rem 1.1rem;
+	}
+
+	.signal-grid__card p + p {
+		margin-top: 0.35rem;
+		color: var(--color-signal);
+	}
+
+	.section {
+		padding: 4rem 0;
+	}
+
+	.section-heading {
+		max-width: 48rem;
+	}
+
+	.section-heading h2 {
+		margin-top: 0.7rem;
+		font-size: clamp(2rem, 4vw, 3.3rem);
+		line-height: 1.02;
+		letter-spacing: -0.04em;
+	}
+
+	.workflow__line {
+		width: 100%;
+		height: 1px;
+		margin: 2rem 0 0;
+		background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 204, 0, 0.9), rgba(255, 255, 255, 0));
+	}
+
+	.workflow__grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1.25rem;
+		margin-top: 1.6rem;
+	}
+
+	.workflow__item,
+	.future__content,
+	.closing__panel {
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 1.6rem;
+	}
+
+	.workflow__item {
+		padding: 1.6rem;
+	}
+
+	.workflow__item h3,
+	.product h3 {
+		margin-top: 0.8rem;
+		font-size: 1.6rem;
+		letter-spacing: -0.03em;
+	}
+
+	.workflow__item p:last-child {
+		margin-top: 0.8rem;
+		line-height: 1.7;
+	}
+
+	.future__content {
+		display: grid;
+		grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
+		gap: 2rem;
+		align-items: center;
+		margin-top: 1.8rem;
+		padding: 1.8rem;
+	}
+
+	.future__lede {
+		font-size: 1.05rem;
+		line-height: 1.8;
+	}
+
+	.origin__intro,
+	.origin__outro {
+		max-width: 44rem;
+		color: var(--color-text-soft);
+		line-height: 1.8;
+	}
+
+	.origin__intro {
+		margin-top: 1rem;
+	}
+
+	.origin__grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1.25rem;
+		margin-top: 1.8rem;
+		align-items: start;
+	}
+
+	.origin__item {
+		padding: 1rem;
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 1.5rem;
+		background: rgba(255, 255, 255, 0.05);
+	}
+
+	.origin__label {
+		margin-bottom: 0.85rem;
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		letter-spacing: 0.15em;
+		text-transform: uppercase;
+		color: var(--color-signal);
+	}
+
+	.origin__item--tweet :global(.twitter-tweet) {
+		margin: 0 !important;
+		max-width: none !important;
+	}
+
+	.origin__item--tweet :global(a),
+	.origin__item--tweet :global(a:visited) {
+		color: var(--color-text) !important;
+		text-decoration: none !important;
+	}
+
+	.origin__item--article {
+		display: grid;
+		gap: 0.9rem;
+		min-height: 100%;
+		padding: 1.35rem;
+	}
+
+	.origin__item--article h3 {
+		font-size: 1.5rem;
+		letter-spacing: -0.03em;
+	}
+
+	.origin__item--article p {
+		color: var(--color-text-soft);
+		line-height: 1.8;
+	}
+
+	.origin__item--article a {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		color: var(--color-text);
+		text-decoration: none;
+		font-weight: 700;
+	}
+
+	.origin__item--article a:visited {
+		color: var(--color-text);
+	}
+
+	.origin__outro {
+		margin-top: 1.2rem;
+	}
+
+	.future__marquee {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		gap: 0.85rem;
+	}
+
+	.future__marquee span {
+		padding: 0.8rem 1rem;
+		border: 1px solid rgba(255, 204, 0, 0.32);
+		border-radius: 999px;
+		background: rgba(255, 204, 0, 0.08);
+		color: var(--color-text);
+	}
+
+	.product-list {
+		display: grid;
+		gap: 1.5rem;
+		margin-top: 2rem;
+	}
+
+	.product {
+		display: grid;
+		grid-template-columns: minmax(0, 0.95fr) minmax(18rem, 1.05fr);
+		gap: 2rem;
+		padding: 2rem 0;
+		border-top: 1px solid rgba(255, 255, 255, 0.12);
+	}
+
+	.product:first-child {
+		padding-top: 0;
+		border-top: none;
+	}
+
+	.product__description {
+		margin-top: 0.85rem;
+		line-height: 1.8;
+		max-width: 35rem;
+	}
+
+	.product__details {
+		display: grid;
+		gap: 1.25rem;
+	}
+
+	.product__points {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.85rem 1rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.product__points li {
+		padding: 1rem 1rem 1rem 1.2rem;
+		border-left: 2px solid rgba(255, 204, 0, 0.5);
+		background: rgba(255, 255, 255, 0.04);
+		color: var(--color-text-soft);
+		line-height: 1.6;
+	}
+
+	.product__install {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.install-command {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		width: 100%;
+		padding: 0.95rem 1.1rem;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 1rem;
+		background: rgba(0, 0, 0, 0.24);
+		color: var(--color-signal);
+		font-family: var(--font-mono);
+		font-size: 0.95rem;
+		text-align: left;
+	}
+
+	.install-command span:first-child {
+		min-width: 0;
+		overflow-x: auto;
+		white-space: nowrap;
+		scrollbar-width: none;
+	}
+
+	.install-command span:first-child::-webkit-scrollbar {
+		display: none;
+	}
+
+	.install-command__icon {
+		display: inline-flex;
+		flex: 0 0 auto;
+		color: var(--color-text);
+		opacity: 0.9;
+	}
+
+	.install-command__icon svg {
+		width: 1rem;
+		height: 1rem;
+	}
+
+	code {
+		display: block;
+		padding: 1rem 1.1rem;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 1rem;
+		background: rgba(0, 0, 0, 0.24);
+		color: var(--color-signal);
+		font-family: var(--font-mono);
+		font-size: 0.95rem;
+		overflow-x: auto;
+	}
+
+	.closing__panel {
+		padding: 2rem;
+		background:
+			radial-gradient(circle at right top, rgba(255, 204, 0, 0.22), transparent 18rem),
+			rgba(255, 255, 255, 0.05);
+	}
+
+	.closing__panel h2 {
+		margin-top: 0.7rem;
+		font-size: clamp(2rem, 4.5vw, 4rem);
+		line-height: 0.98;
+		letter-spacing: -0.05em;
+	}
+
+	.closing__actions {
+		margin-top: 1.8rem;
+	}
+
+	.footer {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.85rem 1.5rem;
+		padding: 0.5rem 0 0;
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	.footer__links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem 1.1rem;
+	}
+
+	.footer__meta {
+		color: var(--color-text-soft);
+		white-space: nowrap;
+	}
+
+	@keyframes rise {
+		from {
+			opacity: 0;
+			transform: translateY(18px);
+		}
+
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes drift {
+		from {
+			transform: translateY(-6px);
+		}
+
+		to {
+			transform: translateY(10px);
+		}
+	}
+
+	@media (max-width: 960px) {
+		.hero,
+		.future__content,
+		.product,
+		.footer {
+			grid-template-columns: 1fr;
+		}
+
+		.hero {
+			padding-top: 3rem;
+			gap: 2.5rem;
+		}
+
+		.origin__grid,
+		.workflow__grid,
+		.product__points {
+			grid-template-columns: 1fr;
+		}
+
+		.footer__meta {
+			width: 100%;
+		}
+	}
+
+	@media (max-width: 720px) {
+		.landing-page {
+			padding-inline: 1rem;
+		}
+
+		.hero {
+			min-height: auto;
+			padding-top: 2rem;
+		}
+
+		h1 {
+			font-size: clamp(2.5rem, 14vw, 3.9rem);
+		}
+
+		.section,
+		.footer {
+			padding-top: 3rem;
+		}
+
+		.signal-grid {
+			aspect-ratio: 0.92 / 1;
+		}
+
+		.signal-node {
+			min-width: 5.8rem;
+			min-height: 4rem;
+			font-size: 0.88rem;
+		}
+
+		.signal-node--core {
+			left: 31%;
+		}
+
+		.signal-grid__card {
+			left: 10%;
+			right: 10%;
+			bottom: 5%;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			scroll-behavior: auto;
+		}
+
+		.hero__copy,
+		.hero__visual {
+			animation: none;
+		}
+
+		.button,
+		.text-link,
+		.footer__links a {
+			transition: none;
+		}
+	}
+</style>
